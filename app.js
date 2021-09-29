@@ -33,8 +33,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Body Parser Middleware
 app.use(express.json());
 
+//stating that we want to use /users for all of our user routes
 app.use('/users', users);
 
+//Index route
 app.get('/', (req, res) => {
     res.send('Invalid endpoint');
 });
