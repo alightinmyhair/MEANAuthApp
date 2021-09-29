@@ -7,7 +7,16 @@ const mongoose = require('mongoose');
 
 const app = express();
 
+const users = require('./routes/users');
+
 const port = 3000;
+
+app.use(cors());
+
+//Body Parser Middleware
+app.use(express.json());
+
+app.use('/users', users);
 
 app.get('/', (req, res) => {
     res.send('Invalid endpoint');
