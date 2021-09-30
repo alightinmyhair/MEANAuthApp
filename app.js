@@ -33,6 +33,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Body Parser Middleware
 app.use(express.json());
 
+app.use(passport.initialize);
+app.use(passport.session());
+
+require('./config/passport')(passport);
+
 //stating that we want to use /users for all of our user routes
 app.use('/users', users);
 
