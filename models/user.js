@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const config = require('../models/database');
+const config = require('../config/database');
 
 
 //User Schema
 const UserSchema = mongoose.Schema({
     name: {
-        type: toString
+        type: String
     },
     email: {
         type: String,
@@ -31,4 +31,15 @@ module.exports.getUserById = function(id, callback) {
 module.exports.getUserByUsername = function(username, callback) {
     const query = {username: username}
     User.findOne(query, callback);
+};
+
+//ask KJ about callbacks
+module.exports.addUser = function(newUser, callback) {
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw error;
+            newUser.password = hash;
+            newUser.save(callback);
+        })
+    });
 }
