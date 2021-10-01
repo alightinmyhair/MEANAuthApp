@@ -33,8 +33,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Body Parser Middleware
 app.use(express.json());
 
-app.use(passport.initialize);
-app.use(passport.session());
+//TODO: Determine if I should use bind to fix the initialization typeerror
+app.use(passport.initialize.bind(passport));
+app.use(passport.session.bind(passport));
 
 require('./config/passport')(passport);
 

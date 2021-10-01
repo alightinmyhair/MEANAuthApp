@@ -33,7 +33,13 @@ module.exports.getUserByUsername = function(username, callback) {
     User.findOne(query, callback);
 };
 
-//ask KJ about callbacks
+module.exports.comparePassword = function(candidatePassword, hash, callback) {
+    bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+        if(err) throw err;
+        callback(null, isMatch);
+    });
+};
+
 module.exports.addUser = function(newUser, callback) {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -42,4 +48,4 @@ module.exports.addUser = function(newUser, callback) {
             newUser.save(callback);
         })
     });
-}
+};
