@@ -5,6 +5,7 @@ const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
+const session = require('express-session');
 
 //Connect to Database
 mongoose.connect(config.database);
@@ -33,11 +34,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Body Parser Middleware
 app.use(express.json());
 
-//TODO: Determine if I should use bind to fix the initialization typeerror
-app.use(passport.initialize.bind(passport));
-app.use(passport.session.bind(passport));
+//this is an object with properties
+app.use(session({secret: "secret", resave: true, saveUninitialized: true}));
 
+//TODO: Determine if I should use bind to
+app.use(passport.initialize());
+app.use(passport.session());
 require('./config/passport')(passport);
+
 
 //stating that we want to use /users for all of our user routes
 app.use('/users', users);
