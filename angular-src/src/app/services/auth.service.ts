@@ -19,5 +19,18 @@ export class AuthService {
     return this.http.post<RegisterResponse>('http://localhost:3000/users/register', user, {headers: headers}).pipe(res => res);
   }
 
+  authenticateUser(user) {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post<RegisterResponse>('http://localhost:3000/users/authenticate', user, {headers: headers}).pipe(res => res);
+  }
 
+  storeUserData(token, user) {
+    localStorage.setItem('id_token', token);
+    //local storage can only store Strings and not objs
+    localStorage.setItem('user', JSON.stringify(user));
+    
+    this.authToken = token;
+    this.user = user;
+  }
 }
