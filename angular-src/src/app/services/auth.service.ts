@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RegisterResponse } from '../models/RegisterResponse';
+import { AuthenticateResponse } from '../models/AuthenticateResponse';
 
 
 @Injectable({
@@ -22,7 +23,7 @@ export class AuthService {
   authenticateUser(user) {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    return this.http.post<RegisterResponse>('http://localhost:3000/users/authenticate', user, {headers: headers}).pipe(res => res);
+    return this.http.post<AuthenticateResponse>('http://localhost:3000/users/authenticate', user, {headers: headers}).pipe(res => res);
   }
 
   storeUserData(token, user) {
