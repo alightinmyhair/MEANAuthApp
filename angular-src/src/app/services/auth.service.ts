@@ -26,6 +26,14 @@ export class AuthService {
     return this.http.post<AuthenticateResponse>('http://localhost:3000/users/authenticate', user, {headers: headers}).pipe(res => res);
   }
 
+  getProfile() {
+    let headers = new HttpHeaders();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.get<AuthenticateResponse>('http://localhost:3000/users/profile', {headers: headers}).pipe(res => res);
+  }
+
   storeUserData(token, user) {
     localStorage.setItem('id_token', token);
     //local storage can only store Strings and not objs
@@ -35,9 +43,14 @@ export class AuthService {
     this.user = user;
   }
 
+  loadToken() {
+    const token = localStorage.getItem('id_token');
+    this.authToken = token;
+  }
+
   logout() {
-    this.user = null;
     this.authToken = null;
+    this.user = null;
 
     localStorage.clear();
   }
