@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RegisterResponse } from '../models/RegisterResponse';
 import { AuthenticateResponse } from '../models/AuthenticateResponse';
+import { tokenNotExpired } from 'angular2-jwt';
 
 
 @Injectable({
@@ -46,6 +47,10 @@ export class AuthService {
   loadToken() {
     const token = localStorage.getItem('id_token');
     this.authToken = token;
+  }
+
+  loggedIn() {
+    return tokenNotExpired();
   }
 
   logout() {
