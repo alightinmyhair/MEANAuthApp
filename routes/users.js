@@ -46,7 +46,7 @@ router.post('/authenticate', (req, res, next) => {
 
                 res.json({
                     success: true,
-                    token: 'JWT' + token,
+                    token: 'JWT ' + token,
                     //building an object to send what we want from user
                     //instead of the entire User, which would include password
                     user: {
